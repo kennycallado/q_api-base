@@ -41,9 +41,11 @@ jobs:
       - name: Install prerequisites
         shell: bash
         run: |
-          case ${{ matrix.job.target }} in
-            apt-get update && apt-get --assume-yes install libssl-dev libpq-dev
-          esac
+          sudo apt-get update && sudo apt-get --assume-yes install libssl-dev libpq-dev
+          # case ${{ matrix.job.target }} in
+            # arm-unknown-linux-*) sudo apt-get -y update ; sudo apt-get -y install gcc-arm-linux-gnueabihf ;;
+            # aarch64-unknown-linux-gnu) sudo apt-get -y update ; sudo apt-get -y install gcc-aarch64-linux-gnu ;;
+          # esac
 
       - name: Install Rust toolchain
         uses: actions-rs/toolchain@v1

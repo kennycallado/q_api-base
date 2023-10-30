@@ -56,14 +56,14 @@ jobs:
           echo "PROJECT_VERSION=$(sed -n 's/^version = "\(.*\)"/\1/p' Cargo.toml | head -n1)" >> $GITHUB_ENV
           echo "PROJECT_HOMEPAGE=$(sed -n 's/^homepage = "\(.*\)"/\1/p' Cargo.toml)" >> $GITHUB_ENV
 
-      - name: Install Rust toolchain
-        uses: actions-rs/toolchain@v1
-        with:
-          # toolchain: stable
-          toolchain: nightly # ?? needed by cross | sqlx ??
-          target: ${{ matrix.job.target }}
-          override: true
-          profile: minimal # minimal component installation (ie, no documentation)
+      # - name: Install Rust toolchain
+      #   uses: actions-rs/toolchain@v1
+      #   with:
+      #     # toolchain: stable
+      #     toolchain: nightly # ?? needed by cross | sqlx ??
+      #     target: ${{ matrix.job.target }}
+      #     override: true
+      #     profile: minimal # minimal component installation (ie, no documentation)
 
       - name: Build binary
         uses: houseabsolute/actions-rust-cross@v0

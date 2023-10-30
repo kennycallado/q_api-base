@@ -70,7 +70,7 @@ jobs:
         with:
           command: build
           target: ${{ matrix.job.target }}
-          args: "--locked --release"
+          args: "--locked --release +nightly"
           strip: true
 
       # - name: Build

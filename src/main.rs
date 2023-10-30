@@ -6,7 +6,7 @@ mod database;
 #[cfg(test)]
 mod test;
 
-#[cfg(feature = "db")]
+#[cfg(any(feature = "db", feature = "db_diesel", feature = "fetch"))]
 extern crate openssl;
 #[cfg(feature = "db")]
 #[macro_use]

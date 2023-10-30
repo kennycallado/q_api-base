@@ -1,0 +1,53 @@
+name: Automated build
+env:
+  CI_INTERMEDIATES_DIR: "_ci-intermediates"
+on:
+  # release:
+  #   types: [created]
+  push:
+    branches:
+      - "actions"
+    # tags:
+    #   - 'v*'
+
+jobs:
+  build:
+    name: ${{ matrix.job.os }} (${{ matrix.job.target }})
+    runs-on: ${{ matrix.job.os }}
+    strategy:
+      fail-fast: false
+      matrix:
+        job:
+          # - {os: ubuntu-20.04, target: arm-unknown-linux-gnueabihf,   use-cross: true}
+          # - {os: ubuntu-20.04, target: arm-unknown-linux-musleabihf,  use-cross: true}
+          # - {os: ubuntu-20.04, target: aarch64-unknown-linux-musl,    use-cross: true}
+          - {os: actuated-aarch64, target: aarch64-unknown-linux-musl}
+          # - {os: ubuntu-20.04, target: aarch64-unknown-linux-gnu,     use-cross: true}
+          - {os: ubuntu-20.04, target: x86_64-unknown-linux-musl}
+          # - {os: ubuntu-20.04, target: x86_64-unknown-linux-gnu}
+
+    steps:
+      - name: Checkout source code
+        uses: actions/checkout@v2
+
+      - name: Extract crate information
+        shell: bash
+        run: |
+          echo "PROJECT_NAME=$(sed -n 's/^name = "\(.*\)"/\1/p' Cargo.toml | head -n1)" >> $GITHUB_ENV
+          echo "PROJECT_VERSION=$(sed -n 's/^version = "\(.*\)"/\1/p' Cargo.toml | head -n1)" >> $GITHUB_ENV
+          echo "PROJECT_HOMEPAGE=$(sed -n 's/^homepage = "\(.*\)"/\1/p' Cargo.toml)" >> $GITHUB_ENV
+
+      - name: Install Rust toolchain
+        uses: actions-rs/toolchain@v1
+        with:
+          toolchain: stable
+          target: ${{ matrix.job.target }}
+          override: true
+          profile: minimal # minimal component installation (ie, no documentation)
+
+      - name: Build
+        uses: actions-rs/cargo@v1
+        with:
+          use-cross: ${{ matrix.job.use-cross }}
+          command: build
+          args: --locked --release --target=${{ matrix.job.target }}

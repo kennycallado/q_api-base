@@ -22,7 +22,7 @@ jobs:
           # - {os: ubuntu-20.04, target: arm-unknown-linux-musleabihf,  use-cross: true}
           # - {os: ubuntu-20.04, target: aarch64-unknown-linux-gnu,     use-cross: true}
           - {os: ubuntu-20.04, target: aarch64-unknown-linux-musl,  use-cross: true}
-          - {os: ubuntu-20.04, target: x86_64-unknown-linux-musl,   use-cross: true}
+          # - {os: ubuntu-20.04, target: x86_64-unknown-linux-musl,   use-cross: true}
           # - {os: ubuntu-20.04, target: x86_64-unknown-linux-gnu}
 
     steps:
@@ -50,8 +50,8 @@ jobs:
       - name: Install Rust toolchain
         uses: actions-rs/toolchain@v1
         with:
-          # if diesel nightly ??
-          toolchain: nightly
+          # toolchain: stable
+          toolchain: nightly # ?? needed by cross | sqlx ??
           target: ${{ matrix.job.target }}
           override: true
           profile: minimal # minimal component installation (ie, no documentation)

@@ -1,5 +1,9 @@
 # q_api-base
 
+## LOG * actions
+
+Not sure whats went wrogn but only those without fetch or diesel can compile on actions...
+
 ## LOG * migration to sqlx
 
 - install sqlx cli

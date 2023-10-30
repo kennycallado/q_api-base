@@ -41,10 +41,10 @@ jobs:
       - name: Install Rust toolchain
         uses: actions-rs/toolchain@v1
         with:
-          toolchain: stable
+          toolchain: nightly
           target: ${{ matrix.job.target }}
           override: true
-          profile: minimal # minimal component installation (ie, no documentation)
+          # profile: minimal # minimal component installation (ie, no documentation)
 
       - name: Build
         uses: actions-rs/cargo@v1

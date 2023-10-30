@@ -29,16 +29,15 @@ jobs:
       - name: Checkout source code
         uses: actions/checkout@v2
 
-      - name: Avoiding run when diesel
-        shell: bash
-        run: |
-          database=$(cat Cargo.toml | grep '^default' | awk '{print $3}' | grep 'db' | tr -d '",[]' )
-
-          if [ "$database" == "db_diesel" ]; then
-            exit 1
-          elif [ "$database" == "db" ]; then
-            exit 1
-          fi
+      # - name: Avoiding run when diesel
+      #   shell: bash
+      #   run: |
+      #     database=$(cat Cargo.toml | grep '^default' | awk '{print $3}' | grep 'db' | tr -d '",[]' )
+      #     if [ "$database" == "db_diesel" ]; then
+      #       exit 1
+      #     elif [ "$database" == "db" ]; then
+      #       exit 1
+      #     fi
 
       - name: Install prerequisites
         shell: bash

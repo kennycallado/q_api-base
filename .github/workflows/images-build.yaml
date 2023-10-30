@@ -38,9 +38,19 @@ jobs:
           database=$(cat Cargo.toml | grep '^default' | awk '{print $3}' | grep 'db' | tr -d '",[]' )
           echo "DB_FEATURE=$(echo $database)" >> $GITHUB_ENV
 
+      - name: Install prerequisites
+        shell: bash
+        run: |
+          case ${{ matrix.job.target }} in
+            sudo apt-get update && sudo apt-get --assume-yes install libssl-dev libpq-dev
+            # arm-unknown-linux-*) sudo apt-get -y update ; sudo apt-get -y install gcc-arm-linux-gnueabihf ;;
+            # aarch64-unknown-linux-gnu) sudo apt-get -y update ; sudo apt-get -y install gcc-aarch64-linux-gnu ;;
+          esac
+
       - name: Install Rust toolchain
         uses: actions-rs/toolchain@v1
         with:
+          # if diesel nightly else stable
           toolchain: nightly
           target: ${{ matrix.job.target }}
           override: true

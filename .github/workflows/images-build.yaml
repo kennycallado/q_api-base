@@ -44,9 +44,9 @@ jobs:
         run: |
           case ${{ matrix.job.target }} in
             aarch64-unknown-linux-musl)
-              sudo dpkg --add-architecture arm64;
+              # sudo dpkg --add-architecture arm64;
               sudo apt-get update ;
-              sudo apt-get --assume-yes install libssl-dev:arm64 libpq-dev:arm64
+              sudo apt-get --assume-yes install libssl-dev libpq-dev
               ;;
           esac
 

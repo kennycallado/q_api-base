@@ -51,7 +51,7 @@ jobs:
         uses: actions-rs/toolchain@v1
         with:
           # if diesel nightly ??
-          toolchain: stable
+          toolchain: nightly
           target: ${{ matrix.job.target }}
           override: true
           profile: minimal # minimal component installation (ie, no documentation)
